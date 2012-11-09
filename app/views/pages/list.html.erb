@@ -1,0 +1,35 @@
+<% @page_title = "Pages List" %>
+
+<%= link_to "<< Back to Subjects List", subjects_path, :class => 'back-link' %>
+
+<div class="page list">
+  <h2>Pages</h2>
+
+  <%= link_to "Add New Page", new_page_path(:subject_id => @subject.id), :class => 'action new' %>
+
+  <table class="listing" summary="Page list">
+    <tr class="header">
+      <th>&nbsp;</th>
+      <th>Page</th>
+      <th>Visible</th>
+      <th>Sections</th>
+      <th>Actions</th>
+    </tr>
+    <% @pages.each do |page| %>
+        <tr>
+          <td><%= page.position %></td>
+          <td><%= page.name %></td>
+          <!--<td class="center"><%= page.visible ? 'Yes' : 'No' %></td>-->
+          <td class="center"><%= status_tag(page.visible) %></td>
+          <td class="center"><%= page.sections.size %></td>
+          <td class="actions">
+            <%= link_to "View Sections", sections_path(:page_id => page.id),
+                        :class => 'action show' %>
+            <%= link_to "Edit", edit_page_path(:id => page.id, :subject_id => @subject.id), :class => 'action edit' %>
+            <%= link_to "Delete", delete_page_path(page.id, :subject_id => @subject.id), :class => 'action delete' %>
+
+          </td>
+        </tr>
+    <% end %>
+  </table>
+</div>

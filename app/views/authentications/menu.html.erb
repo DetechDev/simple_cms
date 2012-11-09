@@ -1,0 +1,16 @@
+<% @page_title = "Admin Menu" %>
+
+<%= link_to "<< Back to Main Public Page", {:controller => "public", :action => 'show'}, :class => 'back-link' %>
+<div class="identity">Logged in as:<span class="userName"><%= session[:username] %></span> </div>
+
+<div class="menu">
+  <h2>Admin Menu</h2>
+  <ul>
+    <li><%= link_to("Manage Content", :controller => 'subjects') %></li>
+    <li><%= link_to("Manage Admin Users", :controller => 'admin_users') %></li>
+    <li><%=  link_to "Logout", logout_authentications_path %></li>
+    <li><%#= link_to("Logout", :action => 'logout') %></li>
+    <li><%#= link_to("Logout", {:controller => 'access'}, :action => 'logout') %></li>
+  </ul>
+
+</div>

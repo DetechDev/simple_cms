@@ -1,0 +1,22 @@
+<%= error_messages_for(@subject) %>
+
+<!--error_messages_for() is a custom helper method in helpers/application_helper.rb -->
+
+<table summary="Subject form fields">
+  <tr>
+    <th><%= f.label(:name) %></th>
+    <td><%= f.text_field(:name) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:position) %></th>
+    <td><%= f.select(:position, 1..@subject_count) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:Visible) %></th>
+    <td><%= f.check_box(:visible, :checked => true) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:created_at, "Created") %></th>
+    <td><%= f.datetime_select(:created_at, :order => [:month, :day, :year]) %></td>
+  </tr>
+</table>

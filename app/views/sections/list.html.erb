@@ -1,0 +1,35 @@
+<% @page_title = "Sections List" %>
+
+<%= link_to "<< Back to Pages List", pages_path(:subject_id => @page.subject.id), :class => 'back-link' %>
+
+<div class="section list">
+  <h2>Sections</h2>
+
+  <%= link_to "Add New Section", new_section_path(:page_id => @page.id), :class => 'action new' %>
+
+  <table class="listing" summary="Section list">
+    <tr class="header">
+      <th>&nbsp;</th>
+      <th>Section</th>
+      <th>Visible</th>
+      <th>Content Type</th>
+      <th>Actions</th>
+    </tr>
+    <% @sections.each do |section| %>
+        <tr>
+          <td><%= section.position %></td>
+          <td><%= section.name %></td>
+          <!--<td class="center"><%= section.visible ? 'Yes' : 'No' %></td>-->
+          <td class="center"><%= status_tag(section.visible) %></td>
+          <td class="center"><%= section.content_type %></td>
+          <td class="actions">
+            <%= link_to "Show", section_path(section.id, :page_id => @page.id), :class => 'action show' %>
+            <%= link_to "Edit", edit_section_path(section.id, :page_id => @page.id), :class => 'action edit' %>
+            <%= link_to "Delete", delete_section_path(section.id, :page_id => @page.id), :class => 'action delete' %>
+          <!--The reason @page.id needs the "@" symbol, and section.id doesn't, is because of the "do" loop above.-->
+          <!--The "do" loop already made the association between @sections and section. There's no association for @page.id-->
+          </td>
+        </tr>
+    <% end %>
+  </table>
+</div>
