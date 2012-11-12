@@ -37,7 +37,8 @@ gem 'rvm-capistrano'
 gem 'capistrano-ext' 
 gem 'bundler'
 gem 'rvm'
-gem 'i18n'
+gem 'therubyracer'
+# gem 'i18n'
 
 # To use debugger
 # gem 'debugger'
