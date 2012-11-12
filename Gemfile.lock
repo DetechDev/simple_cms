@@ -126,6 +126,7 @@ DEPENDENCIES
   capistrano
   capistrano-ext
   coffee-rails (~> 3.2.2)
+  i18n
   jquery-rails
   mysql2
   rails (= 3.2.8)
