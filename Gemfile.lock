@@ -130,6 +130,7 @@ DEPENDENCIES
   capistrano-ext
   coffee-rails (~> 3.2.2)
   jquery-rails
+  libv8
   mysql2
   rails (= 3.2.8)
   rvm

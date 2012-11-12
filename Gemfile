@@ -38,6 +38,7 @@ gem 'capistrano-ext'
 gem 'bundler'
 gem 'rvm'
 gem 'therubyracer'
+gem 'libv8'
 # gem 'i18n'
 
 # To use debugger
