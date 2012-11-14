@@ -66,6 +66,8 @@ SimpleCms::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Added by Bob to fix the error "ActionView::Template::Error (public.css isn't precompiled"
+  # You need to add your custom CSS files to the precompile array.
+  # Once added to the array, "bundle exec rake assets:precompile" will add them to the manifest.yml file.
   config.assets.precompile += ['admin.css', 'public.css']
 
 end
