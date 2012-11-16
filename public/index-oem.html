@@ -4,11 +4,10 @@
     <title>Ruby on Rails: Welcome aboard</title>
     <style type="text/css" media="screen">
       body {
-        margin: 0;
-        margin-bottom: 25px;
-        padding: 0;
+          margin: 0 0 25px;
+          padding: 0;
         background-color: #f0f0f0;
-        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana",serif;
         font-size: 13px;
         color: #333;
       }
@@ -29,9 +28,7 @@
       #page {
         background-color: #f0f0f0;
         width: 750px;
-        margin: 0;
-        margin-left: auto;
-        margin-right: auto;
+          margin: 0 auto;
       }
 
       #content {
@@ -59,10 +56,8 @@
 
 
       #header {
-        background-image: url("assets/rails.png");
-        background-repeat: no-repeat;
-        background-position: top left;
-        height: 64px;
+          background: url("assets/rails.png") no-repeat top left;
+          height: 64px;
       }
       #header h1, #header h2 {margin: 0}
       #header h2 {
@@ -73,9 +68,8 @@
 
 
       #about h3 {
-        margin: 0;
-        margin-bottom: 10px;
-        font-size: 14px;
+          margin: 0 0 10px;
+          font-size: 14px;
       }
 
       #about-content {
@@ -91,9 +85,7 @@
         border-collapse: collapse;
       }
       #about-content td {
-        padding: 10px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+          padding: 3px 10px;
       }
       #about-content td.name  {color: #555}
       #about-content td.value {color: #000}
@@ -123,11 +115,10 @@
         font-size: 20px;
       }
       #getting-started h2 {
-        margin: 0;
-        font-size: 14px;
+          font-size: 14px;
         font-weight: normal;
         color: #333;
-        margin-bottom: 25px;
+          margin: 0 0 25px;
       }
       #getting-started ol {
         margin-left: 0;
@@ -173,11 +164,14 @@
     </style>
     <script type="text/javascript">
       function about() {
-        info = document.getElementById('about-content');
+        //noinspection JSUndeclaredVariable
+          info = document.getElementById('about-content');
         if (window.XMLHttpRequest)
-          { xhr = new XMLHttpRequest(); }
+          { //noinspection JSUndeclaredVariable
+              xhr = new XMLHttpRequest(); }
         else
-          { xhr = new ActiveXObject("Microsoft.XMLHTTP"); }
+          { //noinspection JSUndeclaredVariable
+              xhr = new ActiveXObject("Microsoft.XMLHTTP"); }
         xhr.open("GET","rails/info/properties",false);
         xhr.send("");
         info.innerHTML = xhr.responseText;

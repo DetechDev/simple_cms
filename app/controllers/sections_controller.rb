@@ -56,23 +56,31 @@ class SectionsController < ApplicationController
   end
 
   def update
-    new_position = params[:section].delete(:position)
+    @new_position = params[:section].delete(:position)
     # Find object using form parameters.
     @section = Section.find(params[:id])
     # Update the object.
     if @section.update_attributes(params[:section])
-      @section.move_to_position(new_position)
-      # If update succeeds, display the flash hash message & redirect to the list action.
-      flash[:notice] = "Section updated successfully."
-      redirect_to(:action => 'show', :id => @section.id, :page_id => @section.page.id )
+      move_section_position
     else
-      # If save fails, redisplay the form so user can fix problems.
-      @section_count = @page.sections.size
-      @pages = Page.order('position ASC')
-      render('edit')
-      # Because the object Subject has been instantiated, all
-      # Values the user typed in will appear in the form again.
+      do_not_move_section_position
     end
+  end
+
+  def move_section_position
+    @section.move_to_position(@new_position)
+    # If update succeeds, display the flash hash message & redirect to the list action.
+    flash[:notice] = "Section updated successfully."
+    redirect_to(:action => 'show', :id => @section.id, :page_id => @section.page.id )
+  end
+
+  def do_not_move_section_position
+    # If save fails, redisplay the form so user can fix problems.
+    @section_count = @page.sections.size
+    @pages = Page.order('position ASC')
+    render('edit')
+    # Because the object Subject has been instantiated, all
+    # Values the user typed in will appear in the form again.
   end
 
   #def delete
@@ -93,9 +101,17 @@ class SectionsController < ApplicationController
     # isn't calling a template, we don't need to use an @instance variable.
     # @subject = Subject.find(params[:id])
     # @subject.destroy
-    section = Section.find(params[:id])
-    section.move_to_position(nil)
-    section.destroy
+    @section = Section.find(params[:id])
+    move_to_destroy_position
+    delete_section
+  end
+
+  def move_to_destroy_position
+    @section.move_to_position(nil)
+  end
+
+  def delete_section
+    @section.destroy
     flash[:notice] = "Section deleted successfully."
     redirect_to(:action => 'index', :page_id => @page.id)
   end

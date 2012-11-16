@@ -52,22 +52,30 @@ class SubjectsController < ApplicationController
     end
 
     def update
-      new_position = params[:subject].delete(:position)
+      @new_position = params[:subject].delete(:position)
       # Find object using form parameters.
       @subject = Subject.find(params[:id])
       # Update the object.
       if @subject.update_attributes(params[:subject])
-        @subject.move_to_position(new_position)
-        # If update succeeds, display the flash hash message & redirect to the list action.
-        flash[:notice] = "Subject updated successfully."
-        redirect_to(:action => 'show', :id => @subject.id)
+        move_subject_position
       else
-        # If save fails, redisplay the form so user can fix problems.
-        @subject_count = Subject.count
-        render('edit')
-        # Because the object Subject has been instantiated, all
-        # Values the user typed in will appear in the form again.
+        do_not_move_subject_position
       end
+    end
+
+    def move_subject_position
+      @subject.move_to_position(@new_position)
+      # If update succeeds, display the flash hash message & redirect to the list action.
+      flash[:notice] = "Subject updated successfully."
+      redirect_to(:action => 'show', :id => @subject.id)
+    end
+
+    def do_not_move_subject_position
+      # If save fails, redisplay the form so user can fix problems.
+      @subject_count = Subject.count
+      render('edit')
+      # Because the object Subject has been instantiated, all
+      # Values the user typed in will appear in the form again.
     end
 
   #def delete
@@ -88,12 +96,19 @@ class SubjectsController < ApplicationController
     # isn't calling a template, we don't need to use an @instance variable.
     # @subject = Subject.find(params[:id])
     # @subject.destroy
-    subject = Subject.find(params[:id])
-    subject.move_to_position(nil)
-    subject.destroy
+    @subject = Subject.find(params[:id])
+    move_to_destroy_position
+    delete_subject
+  end
+
+  def move_to_destroy_position
+    @subject.move_to_position(nil)
+  end
+
+  def delete_subject
+    @subject.destroy
     flash[:notice] = "Subject deleted successfully."
     redirect_to(:action => 'index')
   end
-
 
 end

@@ -5,12 +5,12 @@ class ApplicationController < ActionController::Base
   protected
 
   def confirm_logged_in
-    unless session[:user_id]
+    if session[:user_id]
+      return true
+    else
       flash[:notice] = "Please login."
       redirect_to(:controller => 'authentications', :action => 'login')
       return false # halts the before_filter
-    else
-      return true
     end
   end
 

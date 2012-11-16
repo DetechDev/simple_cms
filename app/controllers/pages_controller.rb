@@ -56,23 +56,31 @@ class PagesController < ApplicationController
   end
 
   def update
-    new_position = params[:page].delete(:position)
+    @new_position = params[:page].delete(:position)
     # Find object using form parameters.
     @page = Page.find(params[:id])
     # Update the object.
     if @page.update_attributes(params[:page])
-      @page.move_to_position(new_position)
-      # If update succeeds, display the flash hash message & redirect to the list action.
-      flash[:notice] = "Page updated successfully."
-      redirect_to(:action => 'show', :id => @page.id, :subject_id => @page.subject_id)
+      move_page
     else
-      # If save fails, redisplay the form so user can fix problems.
-      @page_count = @subject.pages.size
-      @subjects = Subject.order('position ASC')
-      render('edit')
-      # Because the object Subject has been instantiated, all
-      # Values the user typed in will appear in the form again.
+      do_not_move_page
     end
+  end
+
+  def move_page
+    @page.move_to_position(@new_position)
+    # If update succeeds, display the flash hash message & redirect to the list action.
+    flash[:notice] = "Page updated successfully."
+    redirect_to(:action => 'show', :id => @page.id, :subject_id => @page.subject_id)
+  end
+
+  def do_not_move_page
+    # If save fails, redisplay the form so user can fix problems.
+    @page_count = @subject.pages.size
+    @subjects = Subject.order('position ASC')
+    render('edit')
+    # Because the object Subject has been instantiated, all
+    # Values the user typed in will appear in the form again.
   end
 
   #def delete
@@ -93,9 +101,17 @@ class PagesController < ApplicationController
     # isn't calling a template, we don't need to use an @instance variable.
     # @subject = Subject.find(params[:id])
     # @subject.destroy
-    page = Page.find(params[:id])
-    page.move_to_position(nil)
-    page.destroy
+    @page = Page.find(params[:id])
+    move_page_position
+    delete_section
+  end
+
+  def move_page_position
+    @page.move_to_position(nil)
+  end
+
+  def delete_section
+    @page.destroy
     flash[:notice] = "Page deleted successfully."
     redirect_to(:action => 'index', :subject_id => @subject.id)
   end
