@@ -76,9 +76,11 @@ class SectionsController < ApplicationController
 
   def do_not_move_section_position
     # If save fails, redisplay the form so user can fix problems.
-    @section_count = @page.sections.size
+    # @section_count = @page.sections.size
+    @section.update_attributes(:page_id => @section.page.id)
     @pages = Page.order('position ASC')
-    render('edit')
+    #render('edit')
+    redirect_to(:action => 'edit', :page_id => @section.page.id)
     # Because the object Subject has been instantiated, all
     # Values the user typed in will appear in the form again.
   end

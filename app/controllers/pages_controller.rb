@@ -76,7 +76,7 @@ class PagesController < ApplicationController
 
   def do_not_move_page
     # If save fails, redisplay the form so user can fix problems.
-    @page.update_attributes(:subject_id => @page.subject.id, :name => "Please enter a page name")
+    @page.update_attributes(:subject_id => @page.subject.id)
     @subjects = Subject.order('position ASC')
     redirect_to(:action => 'edit', :subject_id => @page.subject.id)
     # Because the object Subject has been instantiated, all
