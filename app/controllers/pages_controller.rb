@@ -76,9 +76,9 @@ class PagesController < ApplicationController
 
   def do_not_move_page
     # If save fails, redisplay the form so user can fix problems.
-    @page_count = @subject.pages.size
+    @page.update_attributes(:subject_id => @page.subject.id, :name => "Please enter a page name")
     @subjects = Subject.order('position ASC')
-    render('edit')
+    redirect_to(:action => 'edit', :subject_id => @page.subject.id)
     # Because the object Subject has been instantiated, all
     # Values the user typed in will appear in the form again.
   end
