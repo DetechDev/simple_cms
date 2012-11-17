@@ -76,11 +76,16 @@ class SectionsController < ApplicationController
 
   def do_not_move_section_position
     # If save fails, redisplay the form so user can fix problems.
-    # @section_count = @page.sections.size
+    # :page_id gets blown away when a blank form field is updated
+    # update_attributes is used below to restore the value.
     @section.update_attributes(:page_id => @section.page.id)
+    # @page also gets lost on blank form field submission.
+    # This fixes the "invalid method 'pages'" problem.
+    @page = Page.find_by_id(@section.page.id)
+    @section_count = @page.sections.size
     @pages = Page.order('position ASC')
-    #render('edit')
-    redirect_to(:action => 'edit', :page_id => @section.page.id)
+    # Don't use redirect because you will lose all attributes!
+    render :edit
     # Because the object Subject has been instantiated, all
     # Values the user typed in will appear in the form again.
   end
