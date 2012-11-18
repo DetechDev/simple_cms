@@ -78,12 +78,12 @@ class PagesController < ApplicationController
     # If save fails, redisplay the form so user can fix problems.
     # :subject_id gets blown away when a blank form field is updated
     # update_attributes is used below to restore the value.
-    @page.update_attributes(:subject_id => @page.subject.id)
+    update_attributes
     # @subject also gets lost on blank form field submission.
     # This fixes the "invalid method 'pages'" problem.
     @subject = Subject.find_by_id(@page.subject.id)
     @page_count = @subject.pages.size
-    @subjects = Subject.order('position ASC')
+    get_subjects
     # Don't use redirect because you will lose all attributes!
     render :edit
     # Because the object Subject has been instantiated, all
@@ -121,6 +121,14 @@ class PagesController < ApplicationController
     @page.destroy
     flash[:notice] = "Page deleted successfully."
     redirect_to(:action => 'index', :subject_id => @subject.id)
+  end
+
+  def update_attributes
+    @page.update_attributes(:subject_id => @page.subject.id)
+  end
+
+  def get_subjects
+    @subjects = Subject.order('position ASC')
   end
 
   private

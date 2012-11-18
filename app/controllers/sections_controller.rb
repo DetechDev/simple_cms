@@ -78,12 +78,12 @@ class SectionsController < ApplicationController
     # If save fails, redisplay the form so user can fix problems.
     # :page_id gets blown away when a blank form field is updated
     # update_attributes is used below to restore the value.
-    @section.update_attributes(:page_id => @section.page.id)
+    update_attributes
     # @page also gets lost on blank form field submission.
     # This fixes the "invalid method 'pages'" problem.
     @page = Page.find_by_id(@section.page.id)
     @section_count = @page.sections.size
-    @pages = Page.order('position ASC')
+    get_pages
     # Don't use redirect because you will lose all attributes!
     render :edit
     # Because the object Subject has been instantiated, all
@@ -121,6 +121,14 @@ class SectionsController < ApplicationController
     @section.destroy
     flash[:notice] = "Section deleted successfully."
     redirect_to(:action => 'index', :page_id => @page.id)
+  end
+
+  def update_attributes
+    @section.update_attributes(:page_id => @section.page.id)
+  end
+
+  def get_pages
+    @pages = Page.order('position ASC')
   end
 
   private
