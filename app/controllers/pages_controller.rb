@@ -6,6 +6,7 @@ class PagesController < ApplicationController
 
   before_filter :confirm_logged_in
   before_filter :find_subject
+  #before_filter :set_object
 
   def index
     list
@@ -78,6 +79,7 @@ class PagesController < ApplicationController
     # If save fails, redisplay the form so user can fix problems.
     # :subject_id gets blown away when a blank form field is updated
     # update_attributes is used below to restore the value.
+    set_object_for_errors
     update_attributes
     # @subject also gets lost on blank form field submission.
     # This fixes the "invalid method 'pages'" problem.
@@ -129,6 +131,10 @@ class PagesController < ApplicationController
 
   def get_subjects
     @subjects = Subject.order('position ASC')
+  end
+
+  def set_object_for_errors
+    @the_object = @page
   end
 
   private

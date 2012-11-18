@@ -72,6 +72,7 @@ class SubjectsController < ApplicationController
 
     def do_not_move_subject_position
       # If save fails, redisplay the form so user can fix problems.
+      set_object_for_errors
       @subject_count = Subject.count
       render('edit')
       # Because the object Subject has been instantiated, all
@@ -109,6 +110,10 @@ class SubjectsController < ApplicationController
     @subject.destroy
     flash[:notice] = "Subject deleted successfully."
     redirect_to(:action => 'index')
+  end
+
+  def set_object_for_errors
+    @the_object = @subject
   end
 
 end

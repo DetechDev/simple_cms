@@ -78,6 +78,7 @@ class SectionsController < ApplicationController
     # If save fails, redisplay the form so user can fix problems.
     # :page_id gets blown away when a blank form field is updated
     # update_attributes is used below to restore the value.
+    set_object_for_errors
     update_attributes
     # @page also gets lost on blank form field submission.
     # This fixes the "invalid method 'pages'" problem.
@@ -129,6 +130,10 @@ class SectionsController < ApplicationController
 
   def get_pages
     @pages = Page.order('position ASC')
+  end
+
+  def set_object_for_errors
+    @the_object = @section
   end
 
   private

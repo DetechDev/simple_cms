@@ -20,8 +20,10 @@
         <%= flash[:notice] %>
       </div>
   <% end %>
+
   <div id="content">
     <%= yield %>
+    <%= error_messages_for(@the_object) %>
   </div>
 </div>
 <div id="footer">
