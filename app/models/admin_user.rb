@@ -30,6 +30,8 @@ class AdminUser < ActiveRecord::Base
   #validates_length_of :email, :maximum => 100
   #validates_format_of :email, :with => EMAIL_REGEX
   #validates_confirmation_of :email
+  #validates_confirmation_of :password
+  #validates_presence_of :password_confirmation
 
   # new "sexy" validations
   validates :first_name, :presence => true, :length => { :maximum => 25 }
@@ -37,6 +39,10 @@ class AdminUser < ActiveRecord::Base
   validates :username, :length => { :within => 8..25 }, :uniqueness => true
   validates :email, :presence => true, :length => { :maximum => 100 },
             :format => EMAIL_REGEX, :confirmation => true
+  validates :password, :confirmation => true,
+            :length => {:within => 6..40},
+            :allow_blank => false
+  validates :password_confirmation, :presence => true
 
 
   # Creating password and salt hashes:
